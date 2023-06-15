@@ -1,13 +1,16 @@
 package com.srdevpereira.repository;
 
 import com.srdevpereira.entities.Coin;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CoinRepository {
 
-    private static String INSERT = "insert into coin (name, price, quantity, datetime) value (?, ?, ?, ?)";
+    private static String INSERT = "insert into coin (name, price, quantity, datetime) values (?, ?, ?, ?)";
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public CoinRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

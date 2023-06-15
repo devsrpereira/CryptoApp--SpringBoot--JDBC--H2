@@ -10,7 +10,6 @@ public class Coin {
     private BigDecimal quantity;
     private Timestamp dateTime;
 
-
     public Coin(){}
     public Coin(int id, String name, BigDecimal price, BigDecimal quantity, Timestamp dateTime) {
         this.id = id;
