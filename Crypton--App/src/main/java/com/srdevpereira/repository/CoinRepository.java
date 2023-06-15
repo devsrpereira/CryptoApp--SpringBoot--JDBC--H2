@@ -1,5 +1,6 @@
 package com.srdevpereira.repository;
 
+import com.srdevpereira.DTO.CoinDTO;
 import com.srdevpereira.entities.Coin;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,14 +35,14 @@ public class CoinRepository {
         return coin;
     }
 
-    public List<Coin> getAll(){
-        return jdbcTemplate.query(SELECT_ALL, new RowMapper<Coin>() {
+    public List<CoinDTO> getAll(){
+        return jdbcTemplate.query(SELECT_ALL, new RowMapper<CoinDTO>() {
             @Override
-            public Coin mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Coin coin = new Coin();
-                coin.setName(rs.getString("name"));
-                coin.setQuantity(rs.getBigDecimal("quantity"));
-                return coin;
+            public CoinDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                CoinDTO coinDTO = new CoinDTO();
+                coinDTO.setName(rs.getString("name"));
+                coinDTO.setQuantity(rs.getBigDecimal("quantity"));
+                return coinDTO;
             }
         });
     }
