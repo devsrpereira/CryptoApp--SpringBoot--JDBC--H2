@@ -2,7 +2,7 @@ package com.srdevpereira.DTO;
 
 import java.math.BigDecimal;
 
-public class CoinDTO {
+public class CoinTrasationDTO {
     private String name;
     private BigDecimal quantity;
 

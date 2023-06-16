@@ -1,8 +1,7 @@
 package com.srdevpereira.repository;
 
-import com.srdevpereira.DTO.CoinDTO;
+import com.srdevpereira.DTO.CoinTrasationDTO;
 import com.srdevpereira.entities.Coin;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,7 +17,7 @@ public class CoinRepository {
     private static String SELECT_ALL = "select name, sum(quantity) as quantity from coin group by name";
     private static String SELECT_BY_NAME = "select * from coin where name = ?";
     private static String DELETE = "delete from coin where id = ?";
-
+    private static String UPDATE = "update coin set name = ?, price = ?, quantity = ? where id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -37,14 +36,25 @@ public class CoinRepository {
         return coin;
     }
 
-    public List<CoinDTO> getAll(){
-        return jdbcTemplate.query(SELECT_ALL, new RowMapper<CoinDTO>() {
+    public Coin update(Coin coin){
+        Object[] attr = new Object[]{
+                coin.getName(),
+                coin.getPrice(),
+                coin.getQuantity(),
+                coin.getId()
+        };
+        jdbcTemplate.update(UPDATE, attr);
+        return coin;
+    }
+
+    public List<CoinTrasationDTO> getAll(){
+        return jdbcTemplate.query(SELECT_ALL, new RowMapper<CoinTrasationDTO>() {
             @Override
-            public CoinDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                CoinDTO coinDTO = new CoinDTO();
-                coinDTO.setName(rs.getString("name"));
-                coinDTO.setQuantity(rs.getBigDecimal("quantity"));
-                return coinDTO;
+            public CoinTrasationDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                CoinTrasationDTO coinTrasationDTO = new CoinTrasationDTO();
+                coinTrasationDTO.setName(rs.getString("name"));
+                coinTrasationDTO.setQuantity(rs.getBigDecimal("quantity"));
+                return coinTrasationDTO;
             }
         });
     }

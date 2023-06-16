@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -45,7 +46,6 @@ public class CoinController {
         return c1;
     }
 
-
     @GetMapping()
     public ResponseEntity get(){
         return new ResponseEntity<>(coinRepository.getAll(), HttpStatus.OK);
@@ -61,7 +61,7 @@ public class CoinController {
         }
     }
 
-    @PostMapping() //com só teremos 1 rota de post não se faz necessario determinar um novo end-point para ele
+    @PostMapping() //como só teremos 1 rota de post não se faz necessario determinar um novo end-point para ele
     public ResponseEntity post(@RequestBody Coin coin){ //esta anotação define que os detalhes da requisição estarão no corpo do arquivo Json
         try{
             coin.setDateTime(new Timestamp(System.currentTimeMillis()));//define a data sistemica do momento da requisição
@@ -69,6 +69,17 @@ public class CoinController {
         }
         catch (Exception error){
             return new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping()
+    public ResponseEntity put(@RequestBody Coin coin){
+        try{
+            coin.setDateTime(new Timestamp(System.currentTimeMillis()));
+            return new ResponseEntity<>(coinRepository.update(coin), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NO_CONTENT);
         }
     }
 
