@@ -21,6 +21,15 @@ public class CoinController {
         return new ResponseEntity<>(coinRepository.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{name}")
+    public ResponseEntity get(@PathVariable String name){
+        try{
+            return new ResponseEntity<>(coinRepository.getByName(name), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping() //com só teremos 1 rota de post não se faz necessario determinar um novo end-point para ele
     public ResponseEntity post(@RequestBody Coin coin){ //esta anotação define que os detalhes da requisição estarão no corpo do arquivo Json
